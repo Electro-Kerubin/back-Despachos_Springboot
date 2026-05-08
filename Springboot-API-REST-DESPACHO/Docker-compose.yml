@@ -13,3 +13,14 @@ services:
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
     restart: unless-stopped
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - despachos-network
+
+networks:
+  despachos-network:
+    driver: bridge
+
+volumes:
+  logs:
