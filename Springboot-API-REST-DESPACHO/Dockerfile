@@ -18,6 +18,8 @@ FROM amazoncorretto:17-al2023
 
 WORKDIR /app
 
+RUN yum install -y shadow-utils && yum clean all
+
 RUN groupadd -r spring && useradd -r -g spring spring
 
 RUN mkdir -p /app/logs && chown -R spring:spring /app
