@@ -31,25 +31,19 @@ jobs:
       - name: Deploy en EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.EC2_HOST }}
+          host: ${{ secrets.EC2_HOST_DESPACHOS }}
           username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
+          key: ${{ secrets.EC2_SSH_KEY_DESPACHOS }} 
+          proxy_host: ${{ secrets.FRONTEND_HOST }}
+          proxy_username: ${{ secrets.EC2_USER }}
+          proxy_key: ${{ secrets.FRONTEND_SSH_KEY }}
           script: |
-            # Ir al directorio del proyecto
-            cd /home/${{ secrets.EC2_USER }}/despachos-backend
-
-            # Crear archivo .env con las variables de entorno
-            echo "DB_ROOT_PASSWORD=${{ secrets.DB_ROOT_PASSWORD }}" > .env
-            echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
-            echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
-            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-
-            # Bajar la imagen más reciente
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/despachos-backend:latest
-
-            # Reiniciar solo el servicio app (sin tocar la BD)
+            cd ~/despachos-backend
+            echo "DB_ROOT_PASSWORD=Pass1234$" > .env
+            echo "DB_NAME=bd_despachos" >> .env
+            echo "DB_USERNAME=user_despachos" >> .env
+            echo "DB_PASSWORD=Despachos1234$" >> .env
+            docker pull rodribaeza/despachos-backend:latest
             docker compose down app
             docker compose up -d app
-
-            # Limpiar imágenes antiguas
             docker image prune -f
