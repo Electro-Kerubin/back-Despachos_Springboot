@@ -24,7 +24,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./Springboot-API-REST-DESPACHO
-          dockerfile: ./Springboot-API-REST-DESPACHO/Dockerfile
+          file: ./Springboot-API-REST-DESPACHO/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/despachos-backend:latest
 
