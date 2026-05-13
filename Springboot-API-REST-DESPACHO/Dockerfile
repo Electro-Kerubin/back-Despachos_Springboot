@@ -20,11 +20,11 @@ WORKDIR /app
 
 RUN yum install -y shadow-utils && yum clean all
 
-RUN groupadd -r spring && useradd -r -g spring spring
+RUN groupadd -r backdespacho && useradd -r -g backdespacho backdespacho
 
-RUN mkdir -p /app/logs && chown -R spring:spring /app
+RUN mkdir -p /app/logs && chown -R backdespacho:backdespacho /app
 
-USER spring
+USER backdespacho
 
 COPY --from=builder /app/target/*.jar app.jar
 
